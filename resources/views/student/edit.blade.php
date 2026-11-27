@@ -1,106 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Student</title>
-</head>
-<body>
+
+@include('components.navbar')
 
 <h1>Edit Student</h1>
 
-@if($errors->any())
-    <div>
-        <h3>Please fix the following errors:</h3>
+<form action="/students/{{ $student->id }}" method="POST">
 
-        <ul>
+    @if ($errors->any())
+        <ul style="color: red;">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
-@endif
+    @endif
 
-<form
-    action="/students/{{ $student->id }}"
-    method="POST"
->
     @csrf
+    @method("PUT")
 
-    @method('PUT')
+    <label>Name:</label>
+    <input name="name"
+           value="{{ old('name', $student->name) }}" />
+    <br />
 
-    <div>
-        <label for="name">Name</label>
+    <label>Email:</label>
+    <input name="email"
+           value="{{ old('email', $student->email) }}" />
+    <br />
 
-        <input
-            type="text"
-            id="name"
-            name="name"
-            value="{{ old('name', $student->name) }}"
-        >
-    </div>
+    <label>Phone:</label>
+    <input name="phone"
+           value="{{ old('phone', $student->phone) }}" />
+    <br />
 
-    <br>
+    <label>Address:</label>
+    <textarea name="address">{{ old('address', $student->address) }}</textarea>
+    <br />
 
-    <div>
-        <label for="email">Email</label>
+    <label>Date of Birth:</label>
+    <input
+        name="date_of_birth"
+        type="date"
+        value="{{ old('date_of_birth', $student->date_of_birth->format('Y-m-d')) }}"
+    />
+    <br />
 
-        <input
-            type="email"
-            id="email"
-            name="email"
-            value="{{ old('email', $student->email) }}"
-        >
-    </div>
-
-    <br>
-
-    <div>
-        <label for="phone">Phone</label>
-
-        <input
-            type="text"
-            id="phone"
-            name="phone"
-            value="{{ old('phone', $student->phone) }}"
-        >
-    </div>
-
-    <br>
-
-    <div>
-        <label for="address">Address</label>
-
-        <textarea
-            id="address"
-            name="address"
-        >{{ old('address', $student->address) }}</textarea>
-    </div>
-
-    <br>
-
-    <div>
-        <label for="date_of_birth">Date of Birth</label>
-
-        <input
-            type="date"
-            id="date_of_birth"
-            name="date_of_birth"
-            value="{{ old('date_of_birth', $student->date_of_birth) }}"
-        >
-    </div>
-
-    <br>
-
-    <button type="submit">
-        Update Student
-    </button>
+    <button type="submit">Edit</button>
 
 </form>
-
-<br>
-
-<a href="/students">
-    Back to Students
-</a>
-
-</body>
-</html>

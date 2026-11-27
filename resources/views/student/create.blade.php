@@ -1,100 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Student</title>
-</head>
-<body>
+
+@include('components.navbar')
 
 <h1>Create Student</h1>
 
-@if($errors->any())
-    <div>
-        <h3>Please fix the following errors:</h3>
+<form action="/students" method="POST">
 
-        <ul>
+    @if ($errors->any())
+        <ul style="color: red;">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    </div>
-@endif
-
-<form action="/students" method="POST">
+    @endif
 
     @csrf
 
-    <div>
-        <label for="name">Name</label>
+    <label>Name:</label>
+    <input name="name" value="{{ old('name') }}" />
+    <br />
 
-        <input
-            type="text"
-            id="name"
-            name="name"
-            value="{{ old('name') }}"
-        >
-    </div>
+    <label>Email:</label>
+    <input name="email" value="{{ old('email') }}" />
+    <br />
 
-    <br>
+    <label>Phone:</label>
+    <input name="phone" value="{{ old('phone') }}" />
+    <br />
 
-    <div>
-        <label for="email">Email</label>
+    <label>Address:</label>
+    <textarea name="address">{{ old('address') }}</textarea>
+    <br />
 
-        <input
-            type="email"
-            id="email"
-            name="email"
-            value="{{ old('email') }}"
-        >
-    </div>
+    <label>Date of Birth:</label>
+    <input
+        name="date_of_birth"
+        type="date"
+        value="{{ old('date_of_birth') }}"
+    />
+    <br />
 
-    <br>
-
-    <div>
-        <label for="phone">Phone</label>
-
-        <input
-            type="text"
-            id="phone"
-            name="phone"
-            value="{{ old('phone') }}"
-        >
-    </div>
-
-    <br>
-
-    <div>
-        <label for="address">Address</label>
-
-        <textarea
-            id="address"
-            name="address"
-        >{{ old('address') }}</textarea>
-    </div>
-
-    <br>
-
-    <div>
-        <label for="date_of_birth">Date of Birth</label>
-
-        <input
-            type="date"
-            id="date_of_birth"
-            name="date_of_birth"
-            value="{{ old('date_of_birth') }}"
-        >
-    </div>
-
-    <br>
-
-    <button type="submit">
-        Create Student
-    </button>
+    <button type="submit">Submit</button>
 
 </form>
-
-<br>
-
-<a href="/students">Back to Students</a>
-
-</body>
-</html>
